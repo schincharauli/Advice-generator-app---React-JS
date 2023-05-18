@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import iconMobile from "../public/images/pattern-divider-mobile.svg";
-import iconDesktop from "../public/images/pattern-divider-desktop.svg";
 import dice from "../public/images/icon-dice.svg";
 
 function App() {
