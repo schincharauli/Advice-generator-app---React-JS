@@ -2,11 +2,23 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
+import axios from "axios";
 import iconMobile from "../public/images/pattern-divider-mobile.svg";
 import iconDesktop from "../public/images/pattern-divider-desktop.svg";
 import dice from "../public/images/icon-dice.svg";
 
 function App() {
+  const [advice, setAdvice] = useState("");
+  const [adviceId, getAdviceId] = useState("");
+
+  const getAdvice = async () => {
+    try {
+      const res = await axios.get("https://api.adviceslip.com/advice");
+      setAdvice(res.data.slip.advice);
+      getAdviceId(res.data.slip.id);
+      // console.log(adviceId);
+    } catch (error) {}
+  };
   return (
     <div className="bg-DarkBlue flex items-center justify-center min-h-screen pl-3 pr-3 ">
       <div
@@ -14,16 +26,19 @@ function App() {
         style={{ borderRadius: "10px" }}
       >
         <h3 className="text-sm font-light text-NeonGreen pt-12 flex items-center justify-center">
-          advice number #
+          ADVICE # {adviceId}
         </h3>
         <p className="text-lg font-bold text-LightCyan flex  text-center items-center justify-center pt-3 pl-3 pr-3 min-w-full max-w-xl">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Lorem ipsum
+          {advice}
         </p>
         <div className="flex items-center justify-center pt-6 pb-20">
           <img src={iconMobile} alt="icon" />
         </div>
         <div className="absolute left-1/2 transform -translate-x-1/2 bottom-0 -mb-8">
-          <div className="dice bg-NeonGreen w-16 h-16 rounded-full flex items-center justify-center">
+          <div
+            onClick={getAdvice}
+            className="dice bg-NeonGreen w-16 h-16 rounded-full flex items-center justify-center"
+          >
             <img className="p-5" src={dice} alt="dice" />
           </div>
         </div>
